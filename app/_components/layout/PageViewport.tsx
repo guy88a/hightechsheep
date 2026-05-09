@@ -55,7 +55,10 @@ export default function PageViewport({
     }
 
     scrollEdgeRef.current = nextScrollEdge;
-    setVisibleScrollEdge(nextScrollEdge);
+
+    const isWebEdge = (currentIndex == 0 && nextScrollEdge == "top") ||
+                      (currentIndex == 3 && nextScrollEdge == "bottom");
+    setVisibleScrollEdge(isWebEdge ? null : nextScrollEdge);
   }
 
   function handleWheel(event: React.WheelEvent<HTMLElement>) {
