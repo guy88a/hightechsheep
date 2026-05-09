@@ -35,3 +35,28 @@ body {
   height: var(--footer-height);
   z-index: 10;
 }
+
+.main--scroll-edge-top::before,
+.main--scroll-edge-bottom::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 10rem;
+  pointer-events: none;
+  z-index: 9;
+
+  background-image: url("/images/navigation_glow_strip.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: cover;
+}
+
+.main--scroll-edge-bottom::before {
+  bottom: 0;
+}
+
+.main--scroll-edge-top::before {
+  top: 0;
+  transform: scaleY(-1);
+}

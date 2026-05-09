@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, type MutableRefObject } from "react";
+import { useEffect, useState, useRef, type MutableRefObject } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { pageRoutes } from "../../_config/pageRoutes";
 
 type ScrollDirection = "next" | "previous" | null;
+type ScrollEdge = "top" | "bottom" | null;
 
 export type NavigationIntent = "nav-click" | null;
 
@@ -22,11 +23,40 @@ export default function PageViewport({
   const mainRef = useRef<HTMLElement | null>(null);
   const isChangingPageRef = useRef(false);
   const scrollDirectionRef = useRef<ScrollDirection>(null);
+  const scrollEdgeRef = useRef<ScrollEdge>(null);
+  const [visibleScrollEdge, setVisibleScrollEdge] = useState<ScrollEdge>(null);
 
   const pathname = usePathname();
   const router = useRouter();
 
   const currentIndex = pageRoutes.findIndex((route) => route.href === pathname);
+
+  function getScrollEdge(main: HTMLElement): ScrollEdge {
+    const isAtTop = main.scrollTop <= 0;
+    const isAtBottom =
+      Math.ceil(main.scrollTop + main.clientHeight) >= main.scrollHeight;
+
+    if (isAtTop) {
+      return "top";
+    }
+
+    if (isAtBottom) {
+      return "bottom";
+    }
+
+    return null;
+  }
+
+  function handleScroll(event: React.UIEvent<HTMLElement>) {
+    const nextScrollEdge = getScrollEdge(event.currentTarget);
+
+    if (nextScrollEdge === scrollEdgeRef.current) {
+      return;
+    }
+
+    scrollEdgeRef.current = nextScrollEdge;
+    setVisibleScrollEdge(nextScrollEdge);
+  }
 
   function handleWheel(event: React.WheelEvent<HTMLElement>) {
     const main = mainRef.current;
@@ -98,6 +128,8 @@ export default function PageViewport({
 
       scrollDirectionRef.current = null;
       navigationIntentRef.current = null;
+      scrollEdgeRef.current = getScrollEdge(main);
+      setVisibleScrollEdge(null);
 
       window.setTimeout(() => {
         isChangingPageRef.current = false;
@@ -106,8 +138,15 @@ export default function PageViewport({
   }, [pathname, currentIndex, navigationIntentRef]);
 
   return (
-    <main ref={mainRef} className="main" onWheel={handleWheel}>
-      {children}
-    </main>
-  );
+  <main
+    ref={mainRef}
+    className={`main ${
+      visibleScrollEdge ? `main--scroll-edge-${visibleScrollEdge}` : ""
+    }`}
+    onScroll={handleScroll}
+    onWheel={handleWheel}
+  >
+    {children}
+  </main>
+);
 }
