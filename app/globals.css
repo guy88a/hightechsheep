@@ -21,7 +21,7 @@
 
 body {
   background: var(--background);
-  background-image: url(../public/images/background_full.png);
+  background-image: url(../public/images/background.png);
   background-size: 100% auto;
   background-repeat: repeat-y;
   color: var(--foreground);

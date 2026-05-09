@@ -17,12 +17,12 @@ export default function Header({ onNavClick }: HeaderProps) {
           Home
         </Link>
 
-        <Link href="/games" onClick={onNavClick}>
-          Games
-        </Link>
-
         <Link href="/about" onClick={onNavClick}>
           About
+        </Link>
+
+        <Link href="/games" onClick={onNavClick}>
+          Games
         </Link>
 
         <Link href="/contact" onClick={onNavClick}>
