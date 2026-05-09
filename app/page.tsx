@@ -1,7 +1,12 @@
-const Home = () => {
+export default function HomePage() {
   return (
-    <div>Welcome to HightechSheep</div>
-  )
-}
+    <section className="test-page">
+      <h1 className="test-page__title">Home</h1>
+      <p>Fake home page content.</p>
 
-export default Home
+      <div className="test-page__section">
+        <p>Lower home content for scroll testing.</p>
+      </div>
+    </section>
+  );
+}
