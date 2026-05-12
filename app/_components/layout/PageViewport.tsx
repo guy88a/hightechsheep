@@ -20,7 +20,8 @@ export default function PageViewport({
 }: PageViewportProps) {
   const mainRef = useRef<HTMLElement | null>(null);
 
-  const { updateScrollMetrics } = usePageScrollMetrics({
+  const { updateScrollMetrics, updateStarsBackgroundPosition } =
+  usePageScrollMetrics({
     scrollElementRef: mainRef,
   });
 
@@ -29,6 +30,7 @@ export default function PageViewport({
       mainRef,
       navigationIntentRef,
       updateScrollMetrics,
+      updateStarsBackgroundPosition
     });
 
   return (

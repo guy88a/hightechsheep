@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, type RefObject } from "react";
+import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 export type PageScrollMetrics = {
   scrollTop: number;
@@ -16,9 +16,21 @@ type UsePageScrollMetricsOptions = Readonly<{
 }>;
 
 const defaultStarsScrollSpeed = 0.2;
+const starsBackgroundStorageKey = "hightechsheep-stars-bg-y";
 
 function clampPercent(value: number) {
   return Math.min(100, Math.max(0, value));
+}
+
+function readStoredStarsBackgroundY() {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  const storedValue = window.sessionStorage.getItem(starsBackgroundStorageKey);
+  const parsedValue = storedValue ? Number(storedValue) : 0;
+
+  return Number.isFinite(parsedValue) ? parsedValue : 0;
 }
 
 export function getPageScrollMetrics(
@@ -45,6 +57,22 @@ export function usePageScrollMetrics({
   scrollElementRef,
   starsScrollSpeed = defaultStarsScrollSpeed,
 }: UsePageScrollMetricsOptions) {
+  const starsBackgroundYRef = useRef(0);
+
+  const setStarsBackgroundY = useCallback((nextBackgroundY: number) => {
+    starsBackgroundYRef.current = nextBackgroundY;
+
+    document.documentElement.style.setProperty(
+      "--stars-bg-y",
+      `${nextBackgroundY}px`,
+    );
+
+    window.sessionStorage.setItem(
+      starsBackgroundStorageKey,
+      String(nextBackgroundY),
+    );
+  }, []);
+
   const updateScrollMetrics = useCallback(
     (scrollElement?: HTMLElement | null) => {
       const target = scrollElement ?? scrollElementRef.current;
@@ -59,21 +87,34 @@ export function usePageScrollMetrics({
       rootStyle.setProperty("--page-scroll-top", `${metrics.scrollTop}px`);
       rootStyle.setProperty("--page-scroll-percent", `${metrics.scrollPercent}`);
 
-      rootStyle.setProperty(
-        "--stars-bg-y",
-        `${metrics.scrollTop * starsScrollSpeed * -1}px`,
-      );
-
       return metrics;
     },
-    [scrollElementRef, starsScrollSpeed],
+    [scrollElementRef],
+  );
+
+  const updateStarsBackgroundPosition = useCallback(
+    (scrollDeltaY: number) => {
+      if (scrollDeltaY === 0) {
+        return;
+      }
+
+      const nextBackgroundY =
+        starsBackgroundYRef.current - scrollDeltaY * starsScrollSpeed;
+
+      setStarsBackgroundY(nextBackgroundY);
+    },
+    [setStarsBackgroundY, starsScrollSpeed],
   );
 
   useEffect(() => {
+    const storedStarsBackgroundY = readStoredStarsBackgroundY();
+
+    setStarsBackgroundY(storedStarsBackgroundY);
     updateScrollMetrics();
-  }, [updateScrollMetrics]);
+  }, [setStarsBackgroundY, updateScrollMetrics]);
 
   return {
     updateScrollMetrics,
+    updateStarsBackgroundPosition,
   };
 }

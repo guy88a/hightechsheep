@@ -24,6 +24,7 @@ type UsePageScrollNavigationOptions = Readonly<{
   updateScrollMetrics: (
     scrollElement?: HTMLElement | null,
   ) => PageScrollMetrics | null;
+  updateStarsBackgroundPosition: (scrollDeltaY: number) => void;
 }>;
 
 const edgeBufferRatio = 0.2;
@@ -33,6 +34,7 @@ export function usePageScrollNavigation({
   mainRef,
   navigationIntentRef,
   updateScrollMetrics,
+  updateStarsBackgroundPosition,
 }: UsePageScrollNavigationOptions) {
   const isChangingPageRef = useRef(false);
   const scrollDirectionRef = useRef<ScrollDirection>(null);
@@ -219,7 +221,30 @@ export function usePageScrollNavigation({
     (event: WheelEvent<HTMLElement>) => {
       const main = mainRef.current;
 
-      if (!main || isChangingPageRef.current || currentIndex === -1) {
+      if (!main || currentIndex === -1) {
+        return;
+      }
+
+      const maxScroll = Math.max(main.scrollHeight - main.clientHeight, 0);
+
+      const isScrollingDown = event.deltaY > 0;
+      const isScrollingUp = event.deltaY < 0;
+
+      const isAtWebsiteTop =
+        currentIndex === 0 && main.scrollTop <= 0 && isScrollingUp;
+
+      const isAtWebsiteBottom =
+        currentIndex === lastPageIndex &&
+        main.scrollTop >= maxScroll &&
+        isScrollingDown;
+
+      const isPastWebsiteBoundary = isAtWebsiteTop || isAtWebsiteBottom;
+
+      if (event.deltaY !== 0 && !isPastWebsiteBoundary) {
+        updateStarsBackgroundPosition(event.deltaY);
+      }
+
+      if (isChangingPageRef.current) {
         return;
       }
 
@@ -259,9 +284,11 @@ export function usePageScrollNavigation({
       getNavigationZone,
       getRequestedDirection,
       isWebsiteBoundary,
+      lastPageIndex,
       mainRef,
       navigateToRoute,
       resetNavigationZone,
+      updateStarsBackgroundPosition,
     ],
   );
 

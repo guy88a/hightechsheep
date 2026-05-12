@@ -17,6 +17,7 @@ body {
 
 body {
   background-position-y: var(--stars-bg-y);
+  transition: background-position-y 0.2s linear;
 }
 
 .header {
