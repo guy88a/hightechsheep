@@ -14,7 +14,7 @@ type PageViewportProps = Readonly<{
   navigationIntentRef: MutableRefObject<NavigationIntent>;
 }>;
 
-const edgeBufferRatio = 0.12;
+const edgeBufferRatio = 0.2;
 const navigationCooldownMs = 500;
 
 export default function PageViewport({
