@@ -1,0 +1,20 @@
+.page {
+  min-height: 175vh;
+  padding: 60rem 2rem;
+
+  &--home {
+    padding-top: 20rem;
+  }
+
+  &--contact {
+    padding-bottom: 0rem;
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+  }
+
+  &__section {
+    margin-top: 80vh;
+  }
+}

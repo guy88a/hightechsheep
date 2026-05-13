@@ -27,7 +27,7 @@ type UsePageScrollNavigationOptions = Readonly<{
   updateStarsBackgroundPosition: (scrollDeltaY: number) => void;
 }>;
 
-const edgeBufferRatio = 0.2;
+const edgeBufferRatio = 0.4;
 const navigationCooldownMs = 500;
 
 export function usePageScrollNavigation({
