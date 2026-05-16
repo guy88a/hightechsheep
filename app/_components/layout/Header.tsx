@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import HeaderNav from "./HeaderNav";
 import "@/app/_styles/layout/header.scss";
 
 type HeaderProps = {
@@ -12,23 +12,7 @@ export default function Header({ onNavClick }: HeaderProps) {
     <header className="header">
       <div className="header__brand">HightechSheep</div>
 
-      <nav className="header__nav" aria-label="Main navigation">
-        <Link href="/" onClick={onNavClick}>
-          Home
-        </Link>
-
-        <Link href="/about" onClick={onNavClick}>
-          About
-        </Link>
-
-        <Link href="/games" onClick={onNavClick}>
-          Games
-        </Link>
-
-        <Link href="/contact" onClick={onNavClick}>
-          Contact
-        </Link>
-      </nav>
+      <HeaderNav onNavClick={onNavClick} />
 
       <div className="header__actions">
         <button type="button">Auto</button>
