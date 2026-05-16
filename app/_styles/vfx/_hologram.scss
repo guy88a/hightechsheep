@@ -1,0 +1,48 @@
+// app/_styles/vfx/_vfx.scss
+
+@mixin hologramScanlines($opacity: 0.5) {
+  opacity: $opacity;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(120, 220, 255, 0.28) 0px,
+      rgba(120, 220, 255, 0.28) 1px,
+      rgba(120, 220, 255, 0) 1px,
+      rgba(120, 220, 255, 0) 3px
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 95%,
+      rgba(255, 255, 255, 0)
+    );
+
+  background-size:
+    100% 3px,
+    100% 100%;
+
+  background-repeat:
+    repeat,
+    no-repeat;
+}
+
+@mixin hologramScanlinesAnimated($opacity: 0.5) {
+  @include hologramScanlines($opacity: $opacity);
+
+  animation: hologram-lines-down 1.2s linear infinite;
+}
+
+@keyframes hologram-lines-down {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+
+  to {
+    background-position:
+      0 3px,
+      0 0;
+  }
+}

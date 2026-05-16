@@ -3,6 +3,13 @@
 :root {
   --background: #280e56;
   --foreground: #f8f8f8;
+
+  /* Font colors */
+  --text-primary: #f8f8f8;
+  --text-secondary: #652AFF;
+  --text-on: #ffad12;
+  --text-muted: rgba(248, 248, 248, 0.55);
+  --text-disabled: rgba(248, 248, 248, 0.35);
 }
 
 @media (prefers-color-scheme: dark) {

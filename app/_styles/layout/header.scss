@@ -1,3 +1,5 @@
+@use "../vfx" as vfx;
+
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -33,7 +35,7 @@
     border-radius: 1.75rem;
     z-index: 1;
 
-    color: #ffffff;
+    color: var(--text-primary);
     text-decoration: none;
 
     &:after {
@@ -50,25 +52,13 @@
       opacity: 0;
 
       transition:
-        opacity 200ms ease,
-        transform 200ms ease,
+        opacity 230ms ease,
+        transform 170ms ease,
         box-shadow 200ms ease,
         background 200ms ease,
         backdrop-filter 200ms ease;
 
-      // background:
-      //   linear-gradient(135deg,
-      //     rgba(255, 255, 255, 0.34),
-      //     rgba(255, 255, 255, 0.08) 45%,
-      //     rgba(255, 255, 255, 0.18));
-
-      backdrop-filter: blur(1px) saturate(160%);
-
-      box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.5),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.25),
-        0 0 1px rgba(248, 248, 248, 0.25),
-        0 0px 1px rgba(197, 197, 197, 0.25);
+      @include vfx.glassGlow($depth: 0, $blur: 1px);
     }
 
     &:hover,
@@ -76,53 +66,36 @@
       &:before {
         content: "";
         position: absolute;
-        transform: translateY(0);
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
         z-index: 0;
-        opacity: 0.5;
 
-        background:
-          linear-gradient(to bottom,
-            rgba(120, 220, 255, 0.28) 0px,
-            rgba(120, 220, 255, 0.28) 1px,
-            rgba(120, 220, 255, 0) 1px,
-            rgba(120, 220, 255, 0) 3px),
-          linear-gradient(135deg,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0) 95%,
-            rgba(255, 255, 255, 0));
-
-        background-size:
-          100% 3px,
-          100% 100%;
-
-        background-repeat:
-          repeat,
-          no-repeat;
-
-        animation: hologramLinesDown 1.2s linear infinite;
+        @include vfx.hologramScanlinesAnimated($opacity: 0.6);
       }
 
       &:after {
-        transform: translateY(0);
+        transition:
+          opacity 80ms ease,
+          transform 200ms ease,
+          box-shadow 200ms ease,
+          background 200ms ease,
+          backdrop-filter 200ms ease;
+
+        transform: translateY(0%);
         opacity: 1;
       }
     }
 
     &--active {
-      // color: orange;
-      color: #ff8e2a;
-      filter: brightness(1.25) contrast(1) blur(0.2px) hue-rotate(7deg);
+      color: var(--text-on);
 
-      backdrop-filter: blur(1px) saturate(120%);
-      // -webkit-backdrop-filter: blur(10px) saturate(160%);
-      text-shadow: 0 0 0px rgba(255, 160, 40, 0.75);
+      backdrop-filter: blur(2px) saturate(180%);
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
 
       &:hover {
-        backdrop-filter: blur(0px) saturate(140%);
+        backdrop-filter: blur(1px) saturate(140%);
       }
     }
   }
@@ -130,18 +103,4 @@
 
 .header__actions {
   justify-self: end;
-}
-
-@keyframes hologramLinesDown {
-  from {
-    background-position:
-      0 0,
-      0 0;
-  }
-
-  to {
-    background-position:
-      0 3px,
-      0 0;
-  }
 }
