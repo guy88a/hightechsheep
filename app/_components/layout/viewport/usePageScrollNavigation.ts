@@ -11,7 +11,7 @@ import {
   type WheelEvent,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { pageRoutes } from "../../_config/pageRoutes";
+import { pageRoutes } from "../../../_config/pageRoutes";
 import type { PageScrollMetrics } from "./usePageScrollMetrics";
 
 type ScrollDirection = "next" | "previous" | null;

@@ -1,7 +1,7 @@
 "use client";
 
 import HeaderNav from "./HeaderNav";
-import "@/app/_styles/layout/header.scss";
+import "@/app/_styles/layout/header/header.scss";
 
 type HeaderProps = {
   onNavClick: () => void;
@@ -15,7 +15,7 @@ export default function Header({ onNavClick }: HeaderProps) {
       <HeaderNav onNavClick={onNavClick} />
 
       <div className="header__actions">
-        <button type="button">Auto</button>
+        
       </div>
     </header>
   );

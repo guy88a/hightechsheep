@@ -1,0 +1,20 @@
+@use "./nav";
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  height: var(--header-height);
+  padding: 0 1.75rem;
+
+  font-family: NeueAachenProMedium;
+}
+
+.header__brand {
+  justify-self: start;
+}
+
+.header__actions {
+  justify-self: end;
+}

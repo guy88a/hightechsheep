@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import PageViewport, { type NavigationIntent } from "./PageViewport";
+import Header from "./header/Header";
+import Footer from "./footer/Footer";
+import PageViewport, { type NavigationIntent } from "./viewport/PageViewport";
 
 export default function MainLayout({
   children,
