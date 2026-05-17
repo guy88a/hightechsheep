@@ -1,17 +1,19 @@
 @use "../../vfx" as vfx;
 
-.header__nav {
-  justify-self: center;
+.header {
+  &__nav{
+    justify-self: center;
+  
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 100%;
+  
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
 
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  height: 100%;
-
-  font-size: 1.5rem;
-  font-weight: 500;
-
-  &-link {
+  &__link {
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -36,14 +38,7 @@
       z-index: -1;
       opacity: 0;
 
-      transition:
-        opacity 230ms ease,
-        transform 170ms ease,
-        box-shadow 200ms ease,
-        background 200ms ease,
-        backdrop-filter 200ms ease;
-
-      @include vfx.glassGlow($depth: 0, $blur: 1px);
+      @include vfx.glassGlow($depth: 0, $blur: 1px, $animate: 1);
     }
 
     &:hover,
@@ -63,10 +58,7 @@
       &:after {
         transition:
           opacity 80ms ease,
-          transform 200ms ease,
-          box-shadow 200ms ease,
-          background 200ms ease,
-          backdrop-filter 200ms ease;
+          transform 200ms ease;
 
         transform: translateY(0%);
         opacity: 1;
@@ -74,6 +66,7 @@
     }
 
     &--active {
+      transition: backdrop-filter 200ms ease;
       color: var(--text-on);
 
       backdrop-filter: blur(2px) saturate(180%);

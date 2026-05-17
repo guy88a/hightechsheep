@@ -16,8 +16,15 @@ body {
 }
 
 body {
+  background: var(--background);
+  background-image: url(/images/background.png);
+  background-size: 100% auto;
+  background-repeat: repeat-y;
   background-position-y: var(--stars-bg-y);
   transition: background-position-y 0.2s linear;
+
+  color: var(--foreground);
+  font-family: "NeueAachenProBook", sans-serif;
 }
 
 .header {

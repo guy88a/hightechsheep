@@ -30,7 +30,7 @@ export default function HeaderNav({ onNavClick }: HeaderNavProps) {
             key={item.href}
             href={item.href}
             onClick={onNavClick}
-            className={isActive ? "header__nav-link header__nav-link--active" : "header__nav-link"}
+            className={isActive ? "header__link header__link--active" : "header__link"}
             aria-current={isActive ? "page" : undefined}
           >
             {item.label}
