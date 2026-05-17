@@ -25,6 +25,7 @@ type UsePageScrollNavigationOptions = Readonly<{
     scrollElement?: HTMLElement | null,
   ) => PageScrollMetrics | null;
   updateStarsBackgroundPosition: (scrollDeltaY: number) => void;
+  autoPilotEnabled: boolean;
 }>;
 
 const edgeBufferRatio = 0.4;
@@ -35,6 +36,7 @@ export function usePageScrollNavigation({
   navigationIntentRef,
   updateScrollMetrics,
   updateStarsBackgroundPosition,
+  autoPilotEnabled,
 }: UsePageScrollNavigationOptions) {
   const isChangingPageRef = useRef(false);
   const scrollDirectionRef = useRef<ScrollDirection>(null);
@@ -53,7 +55,7 @@ export function usePageScrollNavigation({
   const lastPageIndex = pageRoutes.length - 1;
 
   // Temporary until the header toggle is wired in.
-  const autoPilotEnabled = true;
+  // const autoPilotEnabled = true;
 
   const getNavigationZoneSize = useCallback((main: HTMLElement) => {
     return main.clientHeight * edgeBufferRatio;

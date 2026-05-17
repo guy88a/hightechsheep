@@ -1,6 +1,11 @@
 import "./ToggleSwitch.scss";
 
-const ToggleSwitch = () => {
+type ToggleSwitchProps = {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+};
+
+const ToggleSwitch = ({ checked, onChange }: ToggleSwitchProps) => {
   return (
     <div className="toggle-switch">
       <input
@@ -9,6 +14,8 @@ const ToggleSwitch = () => {
         className="toggle-switch__checkbox input-hidden"
         data-role="auto-pilot"
         aria-label="Toggle header auto mode"
+        checked={checked}
+        onChange={(event) => onChange(event.target.checked)}
       />
 
       <label
@@ -16,7 +23,7 @@ const ToggleSwitch = () => {
         className="toggle-switch__label"
       />
     </div>
-  )
-}
+  );
+};
 
-export default ToggleSwitch
+export default ToggleSwitch;

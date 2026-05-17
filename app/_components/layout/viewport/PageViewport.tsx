@@ -12,11 +12,13 @@ export type { NavigationIntent };
 type PageViewportProps = Readonly<{
   children: ReactNode;
   navigationIntentRef: MutableRefObject<NavigationIntent>;
+  autoPilotEnabled: boolean;
 }>;
 
 export default function PageViewport({
   children,
   navigationIntentRef,
+  autoPilotEnabled,
 }: PageViewportProps) {
   const mainRef = useRef<HTMLElement | null>(null);
 
@@ -30,7 +32,8 @@ export default function PageViewport({
       mainRef,
       navigationIntentRef,
       updateScrollMetrics,
-      updateStarsBackgroundPosition
+      updateStarsBackgroundPosition,
+      autoPilotEnabled,
     });
 
   return (

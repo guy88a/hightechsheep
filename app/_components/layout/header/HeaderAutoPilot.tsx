@@ -1,9 +1,21 @@
-import ToggleSwitch from "../../ui/ToggleSwitch/ToggleSwitch"
+import { Dispatch, SetStateAction } from "react";
+import ToggleSwitch from "../../ui/ToggleSwitch/ToggleSwitch";
 
-const HeaderAutoPilot = () => {
+type HeaderAutoPilotProps = {
+  autoPilotEnabled: boolean;
+  setAutoPilotEnabled: Dispatch<SetStateAction<boolean>>;
+};
+
+const HeaderAutoPilot = ({
+  autoPilotEnabled,
+  setAutoPilotEnabled,
+}: HeaderAutoPilotProps) => {
   return (
-    <ToggleSwitch />
-  )
-}
+    <ToggleSwitch
+      checked={autoPilotEnabled}
+      onChange={setAutoPilotEnabled}
+    />
+  );
+};
 
-export default HeaderAutoPilot
+export default HeaderAutoPilot;
